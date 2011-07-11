@@ -200,6 +200,7 @@
                 return path;
             }
             var x, y, i, j, pathi;
+            var ii, jj;
             path = path2curve(path);
             for (i = 0, ii = path.length; i < ii; i++) {
                 pathi = path[i];
@@ -440,7 +441,8 @@
                 docum.close();
                 bod = docum.body;
             } catch(e) {
-                bod = createPopup().document.body;
+            	alert("exception:" + e + ". Code is commented out.");
+//                bod = createPopup().document.body;
             }
             var range = bod.createTextRange();
             toHex = cacher(function (color) {
@@ -2057,7 +2059,7 @@
                     attr = {};
                     attr["marker-" + se] = "url(#" + markerId + ")";
                     if (to || from) {
-                        attr.d = Raphael.getSubpath(attrs.path, from, to);
+                        attr.d = window.Raphael.getSubpath(attrs.path, from, to);
                     }
                     $(node, attr);
                     o._.arrows[se + "Path"] = pathId;
@@ -2073,7 +2075,7 @@
                         from = 0;
                         to = R.getTotalLength(attrs.path) - (o._.arrows.enddx * stroke || 0);
                     }
-                    o._.arrows[se + "Path"] && $(node, {d: Raphael.getSubpath(attrs.path, from, to)});
+                    o._.arrows[se + "Path"] && $(node, {d: window.Raphael.getSubpath(attrs.path, from, to)});
                     delete o._.arrows[se + "Path"];
                     delete o._.arrows[se + "Marker"];
                     delete o._.arrows[se + "dx"];
@@ -2137,8 +2139,12 @@
                                 hl.appendChild(node);
                                 pn = hl;
                             }
-                            if (att == "target" && value == "blank") {
-                                pn.setAttributeNS(xlink, "show", "new");
+                            if (att == "target") {
+                            	if (value == "blank") {
+                            		pn.setAttributeNS(xlink, "show", "new");
+                            	} else {
+                            		pn.setAttribute(att,value);                            		
+                            	}
                             } else {
                                 pn.setAttributeNS(xlink, att, value);
                             }
@@ -2272,15 +2278,15 @@
                                 el = $("pattern");
                                 var ig = $("image");
                                 el.id = createUUID();
-                                $(el, {x: 0, y: 0, patternUnits: "userSpaceOnUse", height: 1, width: 1});
-                                $(ig, {x: 0, y: 0, "xlink:href": isURL[1]});
+                                $(el, {x: -1, y: -1, patternUnits: "userSpaceOnUse", height: 1, width: 1});
+                                $(ig, {x: 1, y: 1, "xlink:href": isURL[1]});
                                 el.appendChild(ig);
 
                                 (function (el) {
                                     preload(isURL[1], function () {
                                         var w = this.offsetWidth,
                                             h = this.offsetHeight;
-                                        $(el, {width: w, height: h});
+                                        $(el, {width: w + 2, height: h + 2});
                                         $(ig, {width: w, height: h});
                                         o.paper.safari();
                                     });
@@ -3229,6 +3235,7 @@
             stroke[se + "arrowwidth"] = h;
         };
         setFillAndStroke = function (o, params) {
+
             o.paper.canvas.style.display = "none";
             o.attrs = o.attrs || {};
             var node = o.node,
@@ -3247,6 +3254,7 @@
                 a.path = getPath[o.type](o);
                 o._.dirty = 1;
             }
+            
             params.href && (node.href = params.href);
             params.title && (node.title = params.title);
             params.target && (node.target = params.target);
@@ -3336,6 +3344,7 @@
                         fill.rotate = true;
                         fill.src = isURL[1];
                         fill.type = "tile";
+                        fill.size = params["fill-size"];
                         var bbox = o.getBBox(1);
                         fill.position = bbox.x + S + bbox.y;
                         o._.fillpos = [bbox.x, bbox.y];
@@ -3801,7 +3810,7 @@
             el.coordsize = zoom + S + zoom;
             el.coordorigin = vml.coordorigin;
             var p = new Element(el, vml),
-                attr = {fill: "none", stroke: "#000"};
+                attr = {fill: "none", stroke: "#000", target:"_top"};
             pathString && (attr.path = pathString);
             p.type = "path";
             p.path = [];
@@ -3813,6 +3822,7 @@
             el.appendChild(skew);
             p.skew = skew;
             p.transform(E);
+
             return p;
         };
         theRect = function (vml, x, y, w, h, r) {
@@ -5274,7 +5284,7 @@
             return;
         }
         if (!isInAnim) {
-            for (attr in params) if (params[has](attr)) {
+            for (var attr in params) if (params[has](attr)) {
                 if (availableAnimAttrs[has](attr) || element.paper.customAttributes[has](attr)) {
                     from[attr] = element.attr(attr);
                     (from[attr] == null) && (from[attr] = availableAttrs[attr]);
@@ -5872,7 +5882,7 @@
         return token || E;
     };
     R.ninja = function () {
-        oldRaphael.was ? (g.win.Raphael = oldRaphael.is) : delete Raphael;
+        oldRaphael.was ? (g.win.Raphael = oldRaphael.is) : delete window.Raphael;
         return R;
     };
     /*\
@@ -5906,7 +5916,7 @@
         isLoaded();
     })(document, "DOMContentLoaded");
 
-    oldRaphael.was ? (g.win.Raphael = R) : (Raphael = R);
+    oldRaphael.was ? (g.win.Raphael = R) : (window.Raphael = R);
 
     /*
      * Eve 0.2.1 - JavaScript Events Library
