@@ -2776,7 +2776,7 @@
             return;
         }
         if (!isInAnim) {
-            for (attr in params) if (params[has](attr)) {
+            for (var attr in params) if (params[has](attr)) {
                 if (availableAnimAttrs[has](attr) || element.paper.customAttributes[has](attr)) {
                     from[attr] = element.attr(attr);
                     (from[attr] == null) && (from[attr] = availableAttrs[attr]);
