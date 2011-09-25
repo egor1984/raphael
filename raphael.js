@@ -552,7 +552,7 @@
                 docum.close();
                 bod = docum.body;
             } catch(e) {
-                bod = createPopup().document.body;
+                alert("exception:" + e + ". Code is commented out.");
             }
             var range = bod.createTextRange();
             toHex = cacher(function (color) {
