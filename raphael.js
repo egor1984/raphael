@@ -552,7 +552,7 @@
                 docum.close();
                 bod = docum.body;
             } catch(e) {
-                alert("exception:" + e + ". Code is commented out.");
+                alert("exception:" + e);
             }
             var range = bod.createTextRange();
             toHex = cacher(function (color) {
@@ -3707,8 +3707,12 @@ window.Raphael.svg && function (R) {
                             hl.appendChild(node);
                             pn = hl;
                         }
-                        if (att == "target" && value == "blank") {
-                            pn.setAttributeNS(xlink, "show", "new");
+                        if (att == "target") {
+                              if (value == "blank") {
+                                pn.setAttributeNS(xlink, "show", "new");
+                              } else {
+                                pn.setAttribute(att,value);                                
+                              }
                         } else {
                             pn.setAttributeNS(xlink, att, value);
                         }
