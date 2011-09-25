@@ -648,7 +648,7 @@
                 clr.v = rgb.b;
             } else {
                 clr = {hex: "none"};
-                crl.r = clr.g = clr.b = clr.h = clr.s = clr.v = clr.l = -1;
+                clr.r = clr.g = clr.b = clr.h = clr.s = clr.v = clr.l = -1;
             }
         }
         clr.toString = rgbtoString;
