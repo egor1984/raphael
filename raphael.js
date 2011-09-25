@@ -428,6 +428,7 @@
                 return path;
             }
             var x, y, i, j, pathi;
+            var ii,jj;
             path = path2curve(path);
             for (i = 0, ii = path.length; i < ii; i++) {
                 pathi = path[i];
