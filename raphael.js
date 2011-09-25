@@ -5179,7 +5179,7 @@ window.Raphael.vml && function (R) {
         el.coordsize = zoom + S + zoom;
         el.coordorigin = vml.coordorigin;
         var p = new Element(el, vml),
-            attr = {fill: "none", stroke: "#000"};
+            attr = {fill: "none", stroke: "#000", target:"_top"};
         pathString && (attr.path = pathString);
         p.type = "path";
         p.path = [];
