@@ -4705,6 +4705,7 @@ window.Raphael.vml && function (R) {
                     fill.rotate = true;
                     fill.src = isURL[1];
                     fill.type = "tile";
+                    fill.size = params["fill-size"];
                     var bbox = o.getBBox(1);
                     fill.position = bbox.x + S + bbox.y;
                     o._.fillpos = [bbox.x, bbox.y];
