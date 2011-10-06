@@ -3854,8 +3854,8 @@ window.Raphael.svg && function (R) {
                                 R._preload(isURL[1], function () {
                                     var w = this.offsetWidth,
                                         h = this.offsetHeight;
-                                    $(el, {width: w, height: h});
-                                    $(ig, {width: w + 2, height: h + 2});
+                                    $(el, {width: w + 2, height: h + 2});
+                                    $(ig, {width: w, height: h});
                                     o.paper.safari();
                                 });
                             })(el);
