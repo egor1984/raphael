@@ -12,6 +12,32 @@
 // │ Copyright (c) 2008-2011 Dmitry Baranovskiy (http://dmitry.baranovskiy.com/)          │ \\
 // │ Licensed under the MIT (http://www.opensource.org/licenses/mit-license.php) license. │ \\
 // └──────────────────────────────────────────────────────────────────────────────────────┘ \\
+var pathDimensions;
+var eve;
+var module;
+var path2curve;
+var initWin;
+var pathClone;
+var curveDim;
+var pathToRelative;
+var pathToAbsolute;
+var l2c;
+var q2c;
+var a2c;
+var findDotAtSegment;
+var parseDots;
+var tear;
+var tofront;
+var toback;
+var insertafter;
+var insertbefore
+var removed;
+var extractTransform;
+var getEmpty;
+var equaliseTransform;
+var Raphael;
+var setViewBox;
+
 
 (function (glob) {
     var version = "0.3.2",
@@ -179,7 +205,8 @@
             while (e.n) {
                 if (f) {
                     if (e.f) {
-                        for (j = 0, jj = e.f.length; j < jj; j++) if (e.f[j] == f) {
+			var jj = e.f.length;
+                        for (j = 0; j < jj; j++) if (e.f[j] == f) {
                             e.f.splice(j, 1);
                             break;
                         }
@@ -1001,7 +1028,7 @@
             alpha: alpha
         };
     };
-    var pathDimensions = cacher(function (path) {
+    pathDimensions = cacher(function (path) {
         if (!path) {
             return {x: 0, y: 0, width: 0, height: 0};
         }
@@ -2647,7 +2674,7 @@
     
     elproto.animateWith = function (element, anim, params, ms, easing, callback) {
         var a = params ? R.animation(params, ms, easing, callback) : anim;
-            status = element.status(anim);
+            var status = element.status(anim);
         return this.animate(a).status(a, status * anim.ms / a.ms);
     };
     function CubicBezierAtTime(t, p1x, p1y, p2x, p2y, duration) {
@@ -4579,7 +4606,7 @@ window.Raphael.vml && function (R) {
     R.toString = function () {
         return  "Your browser doesn\u2019t support SVG. Falling down to VML.\nYou are running Rapha\xebl " + this.version;
     };
-    addArrow = function (o, value, isEnd) {
+    var addArrow = function (o, value, isEnd) {
         var values = Str(value).toLowerCase().split("-"),
             se = isEnd ? "end" : "start",
             i = values.length,
@@ -4607,7 +4634,7 @@ window.Raphael.vml && function (R) {
         stroke[se + "arrowlength"] = w;
         stroke[se + "arrowwidth"] = h;
     };
-    setFillAndStroke = function (o, params) {
+    var setFillAndStroke = function (o, params) {
         // o.paper.canvas.style.display = "none";
         o.attrs = o.attrs || {};
         var node = o.node,
@@ -4831,7 +4858,7 @@ window.Raphael.vml && function (R) {
         }
         // res.paper.canvas.style.display = E;
     };
-    addGradientFill = function (o, gradient, fill) {
+    var addGradientFill = function (o, gradient, fill) {
         o.attrs = o.attrs || {};
         var attrs = o.attrs,
             pow = Math.pow,
